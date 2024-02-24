@@ -4,7 +4,7 @@ use clap::{Parser, ValueEnum};
 
 pub fn core() {
     let args = Args::parse();
-    let mut method = args.method;
+    let method = args.method;
     println!("{:?}", method);
     println!("{:?}", args.url);
     println!("{:?}", args.body);
@@ -13,11 +13,11 @@ pub fn core() {
 #[derive(Parser, Debug)]
 #[clap(name = "http")]
 struct Args {
-    #[arg(help = "The URL to send the request to")]
-    url: OsString,
-
-    #[arg(default_value = "GET", ignore_case = true)]
+    #[arg(ignore_case = true)]
     method: Method,
+
+    #[arg()]
+    url: OsString,
 
     #[arg()]
     body: Vec<OsString>,
@@ -25,8 +25,6 @@ struct Args {
 
 #[derive(Debug, Clone, ValueEnum, Copy)]
 enum Method {
-    #[value(name = "BLANK")]
-    BLANK,
     #[value(name = "GET")]
     GET,
     #[value(name = "POST")]
